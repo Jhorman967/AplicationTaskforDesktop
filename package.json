@@ -2,20 +2,45 @@
   "name": "tareas",
   "version": "0.1.0",
   "private": true,
+  "main": "public/electron.js",
+  "author": "Jhorman Gonzalez",
+  "license": "MIT",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "assert": "^2.1.0",
+    "bootswatch": "^5.3.3",
+    "crypto-browserify": "^3.12.0",
+    "path-browserify": "^1.0.1",
+    "pg-hstore": "^2.3.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.3",
     "react-scripts": "5.0.1",
+    "rocksdb": "^5.2.1",
+    "sequelize": "^6.37.1",
+    "sequelize-cli": "^6.6.2",
+    "sqlite3": "^5.1.7",
+    "url": "^0.11.3",
+    "util": "^0.12.5",
     "web-vitals": "^2.1.4"
+  },
+  "devDependencies": {
+    "@juliangumenita/electron-is-dev": "^2.0.1",
+    "@replace5/electron-is-dev": "^2.0.0",
+    "@types/sequelize": "^4.28.20",
+    "concurrently": "^8.2.2",
+    "currently": "^0.0.8",
+    "electron": "^29.1.1",
+    "wait-on": "^7.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "electron-dev": "concurrently  \"npm start\" \"wait-on http://localhost:3000 && electron .\""
   },
   "eslintConfig": {
     "extends": [

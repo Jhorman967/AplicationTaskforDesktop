@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import {DragAndDrop} from "./components/dragAndDrop.tsx";
+import Login from "./views/login";
+import { BrowserRouter, Routes, Route  } from 'react-router-dom';
+import {Boton}  from "./components/testmodal.tsx";
 
+
+ // <div classNameName="App">
+    //   <DragAndDrop/>
+
+    //   {/* <Login/> */}
+    // </div>
 function App() {
+
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+    <Routes >
+    <Route path='/' element={<Login/>}/>
+    <Route path="/boton" element={<Boton/>}/>
+    <Route path='/tareas' element={<DragAndDrop/>}/>
+    </Routes>
+    </BrowserRouter>
   );
 }
 
 export default App;
+ 
