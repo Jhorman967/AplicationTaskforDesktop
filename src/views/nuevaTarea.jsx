@@ -26,9 +26,9 @@ export const NewTarea = ()=>(
               <div className="form-group">
                 <label for="estado">Estado:</label>
                 <select className="form-control" id="estado">
-                  <option value="pendiente">Pendiente</option>
-                  <option value="en_progreso">En Progreso</option>
-                  <option value="cancelada">Realizada</option>
+                  <option value="Pendientes">Pendiente</option>
+                  <option value="En Proceso">En Progreso</option>
+                  <option value="Finalizado">Realizada</option>
                 </select>
               </div>
               {/* <!-- Campo Observación --> */}

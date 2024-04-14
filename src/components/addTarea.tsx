@@ -1,56 +1,54 @@
 import React, { useState } from "react";
 import { ModalReact } from "./modal.tsx";
 import { data } from "../assets/index.ts";
+import tareaService from "../services/tareaService.jsx";
+import { response } from "express";
 
 
-
-export const AddTarea = ({setShow, men }) => {
-
+export const AddTarea = ({setShowModal, men }) => {
 
     
+    const { getAllTask, createTask, updateTask, deleteTask } = tareaService();
   
     const [tarea, setTarea]=useState({
             titulo:'',
             date:'',
-            status:'pendiente',
+            statusN:'Pendientes',
             content:''
         })
 
     const handleChange = (evt)=>{
         
         const {name, value } =evt.target;
-
-       
-
        setTarea({
             ...tarea,
             [name]:value
         })   
-    
         }
 
-    const handleSubmit = () => {
-        
-
+    const handleSubmit = async (e: React.FormEvent) => {
+     
+        e.preventDefault();
         console.log(tarea)
         console.log(men.mensaje)
         // const [datos, setDatos]= useState(data)
 
-
-
-
-
-
-
-
+        try {
+            const creartarea = await createTask(tarea);
+            console.log("tarea creada correctamente", creartarea)
+            setShowModal(false)
+        }catch (error){
+            console.log("error al crear la tarea", error)
+        }
     }
+
 
 
    
 
     return(
 
-        <ModalReact setShow={setShow} titleModal={"Agregar Tarea"} handleSubmit={handleSubmit}>
+        <ModalReact setShowModal={setShowModal} titleModal={"Agregar Tarea"} handleSubmit={handleSubmit}>
 
 
 
@@ -71,31 +69,39 @@ export const AddTarea = ({setShow, men }) => {
                                       placeholder="Ingrese el título de la tarea"
                                       name="titulo"
                                       value={tarea.titulo}
+                                      required
                                       onChange={handleChange}
+                                      
                                       />
                                   </div>
                                   {/* <!-- Campo Fecha --> */}
                                   <div className="form-group mt-3">
                                       <label htmlFor="date">Fecha:</label>
-                                      <input type="date" 
+                                      <input type="datetime-local" 
+                                      
                                       className="form-control" 
                                       id="date"
                                       name="date"
+                                      required
                                       value={tarea.date}
                                       onChange={handleChange}
+                                      
                                       />
                                   </div>
                                   {/* <!-- Campo Estado --> */}
                                   <div className="form-group mt-3">
                                       <label htmlFor="status">Estado:</label>
                                       <select className="form-control" id="status"
-                                        name="status"
-                                        value={tarea.status}
+                                    
+                                        name="statusN"
+                                        value={tarea.statusN}
+                                        required
                                         onChange={handleChange}
                                       >
-                                        <option value="pendiente">Pendiente</option>
-                                        <option value="en_progreso">En Progreso</option>
-                                        <option value="cancelada">Realizada</option>
+                                        
+                                        <option value="Pendientes">Pendientes</option>
+                                        <option value="En Proceso">En Progreso</option>
+                                        <option value="Finalizado">Realizada</option>
                                       </select>
                                   </div> 
                                   {/* <!-- Campo Observación --> */}
@@ -106,14 +112,24 @@ export const AddTarea = ({setShow, men }) => {
                                       placeholder="Ingrese una observación"
                                       name="content"
                                       value={tarea.content}
+                                      required
                                       onChange={handleChange}
                                       >
 
                                       </textarea>
                                   </div>
-                                  {/* <!-- Botón para enviar el formulario --> */}
-                                  {/* <button type="submit" className="btn btn-primary btn-block">Agregar Tarea</button> */}
+                                  <hr />
+                                  <div className="text-end">
+                            <button type="submit" className="btn btn-primary">
+                                Agregar Tarea
+                            </button>
+                        </div>
+
+                               
+                                  {/* <!-- Botón para enviar el formulario --> */} 
+                                   {/* <button type="submit" className="btn btn-primary btn-block">Agregar Tarea</button> */}
                                   </form>
+                              
                               </div>
                               </div>
                           </div>          

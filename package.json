@@ -1,34 +1,37 @@
 {
   "name": "tareas",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "main": "public/electron.js",
   "author": "Jhorman Gonzalez",
   "license": "MIT",
+  "homepage": "./",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "assert": "^2.1.0",
+    "axios": "^1.6.8",
+    "bootstrap-icons": "^1.11.3",
     "bootswatch": "^5.3.3",
+    "cors": "^2.8.5",
     "crypto-browserify": "^3.12.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
     "path-browserify": "^1.0.1",
     "pg-hstore": "^2.3.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.22.3",
+    "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
-    "rocksdb": "^5.2.1",
     "sequelize": "^6.37.1",
     "sequelize-cli": "^6.6.2",
-    "sqlite3": "^5.1.7",
+    "sqlite3": "^5.1.6",
     "url": "^0.11.3",
     "util": "^0.12.5",
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
-    "@juliangumenita/electron-is-dev": "^2.0.1",
-    "@replace5/electron-is-dev": "^2.0.0",
     "@types/sequelize": "^4.28.20",
     "concurrently": "^8.2.2",
     "currently": "^0.0.8",
@@ -40,7 +43,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "electron-dev": "concurrently  \"npm start\" \"wait-on http://localhost:3000 && electron .\""
+    "electron-dev": "concurrently   \"npm start\" \"wait-on http://localhost:3000 && electron .\"",
+    "electron-pack": "electron-builder -c.extraMetadata.main=build/electron.js"
   },
   "eslintConfig": {
     "extends": [
@@ -59,5 +63,23 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "build": {
+    "appId": "com.tareas.musicfy",
+    "nodeVersion": "20.11.1",
+    "files": [
+      "build/**/*",
+      "node_modules/**/*",
+      "public/backend/database.sqlite"
+    ],
+    "extraFiles": [
+      {
+        "from": "database.sqlite",
+        "to": "."
+      }
+    ],
+    "directories": {
+      "buildResources": "assets"
+    }
   }
 }

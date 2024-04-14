@@ -2,6 +2,7 @@ import React from "react";
 import {Data, Status } from "../views/mainboard";
 import {Card} from "./card.tsx";
 
+
 interface Props {
     items: Data[]
     status: Status
@@ -11,6 +12,8 @@ interface Props {
 
 }
 export const ContainerCards = ({ items=[], status, isDragging,  handleDragging,handleUpdateList}: Props) =>{
+
+
     const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault()
     }
@@ -20,6 +23,8 @@ export const ContainerCards = ({ items=[], status, isDragging,  handleDragging,h
         handleUpdateList(id, status)
         handleDragging(false)
     }
+
+
 return(
     <div className={`col-md-4 justify-content-around full-height ${isDragging ? 'col-md-4 columna justify-content-around full-height':''}`}
     onDragOver={handleDragOver}
@@ -29,7 +34,7 @@ return(
                 <h2 className="text-center mt-3">{status}</h2>
                 {
                     items.map(item => (
-                        status === item.status &&
+                        status === item.statusN &&
                         <Card
                          data={item}
                          key={item.id}
@@ -39,6 +44,8 @@ return(
                     ))
                 }
         </div>
+     
+      
     </div>
 )
 

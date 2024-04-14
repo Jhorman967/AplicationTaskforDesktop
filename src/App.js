@@ -1,28 +1,28 @@
-import {DragAndDrop} from "./components/dragAndDrop.tsx";
+import { DragAndDrop } from "./components/dragAndDrop.tsx";
 import Login from "./views/login";
-import { BrowserRouter, Routes, Route  } from 'react-router-dom';
-import {Boton}  from "./components/testmodal.tsx";
+import { HashRouter, Routes, Route } from "react-router-dom";
+import { Boton } from "./components/testmodal.tsx";
+import { UserProvider } from "./hooks/userContext.js";
 
+// <div classNameName="App">
+//   <DragAndDrop/>
 
- // <div classNameName="App">
-    //   <DragAndDrop/>
-
-    //   {/* <Login/> */}
-    // </div>
+//   {/* <Login/> */}
+// </div>
 function App() {
 
 
-
   return (
-    <BrowserRouter>
-    <Routes >
-    <Route path='/' element={<Login/>}/>
-    <Route path="/boton" element={<Boton/>}/>
-    <Route path='/tareas' element={<DragAndDrop/>}/>
-    </Routes>
-    </BrowserRouter>
+    <UserProvider>
+      <HashRouter basename="/">
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/boton" element={<Boton />} />
+          <Route path="/tareas" element={<DragAndDrop />} />
+        </Routes>
+      </HashRouter>
+    </UserProvider>
   );
 }
 
 export default App;
- 

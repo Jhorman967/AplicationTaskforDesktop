@@ -1,43 +1,64 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Data, Status } from "../views/mainboard";
 import {ContainerCards} from "./containercards.tsx";
 import { data } from '../assets/index.ts'
 import { NavBar } from "./navBar.tsx";
-
-import { ipcRenderer } from 'electron';
-
+import tareaService from "../services/tareaService.jsx";
+import { Notificaciones } from "./notification.tsx";
 
 
 
 const typesTarea: Status[] = ['Pendientes', 'En Proceso', 'Finalizado']
 
 
-
-
 export const DragAndDrop = () =>{
+
+    const { getAllTask, createTask, updateTask, deleteTask } = tareaService();
     const [isDragging, setIsDragging] = useState(false)
-    const [listItems, setListItems] = useState<Data[]>(data)
+    const [listItems, setListItems] = useState<Data[]>([])
 
-    const user = {
-        id: 1,
-        email: "Prueba@gmail.com",
-        nombre: "jhorman",
+    const [filteredItems, setFilteredItems] = useState<Data[]>([])
+    const [searchTerm, setSearchTerm] = useState("");
+
+
+
+
+    //actualiza las tareas cada 5 microsegundos
+    useEffect(() => {
+        const intervalID = setInterval(fetchTasks, 500);
+        
+        fetchTasks(); 
+        return () => clearInterval(intervalID); 
+    }, []);
+
+    //realiza la busqueda
+
+   useEffect(() => {
+    if (searchTerm) {
+      const results = listItems.filter((item) =>
+      item.titulo && item.titulo.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredItems(results);
+    } else {
+      setFilteredItems(listItems);
     }
+  }, [searchTerm, listItems]);
 
-// const registerUser = async (userData) => {
-//   try {
-//     const result = await ipcRenderer.invoke('registerUser', userData);
-//     if (result) {
-//       console.log('Usuario registrado correctamente');
-//     } else {
-//       console.error('Error al registrar usuario');
-//     }
-//   } catch (error) {
-//     console.error('Error al comunicarse con el backend:', error);
-//   }
-// };
 
-// registerUser(user)
+    //trae las tareas
+    const fetchTasks = async  () =>{
+        try {
+            const tasks = await getAllTask()
+            setListItems(tasks)
+           
+        }catch(err) {
+                console.log("error al mostrar las tareas", err)
+            }
+        }
+
+
+      
+        
 
 
 
@@ -45,44 +66,59 @@ export const DragAndDrop = () =>{
 
     const handleDragging = (dragging: boolean) => setIsDragging(dragging)
 // Evaluo el estado de la card
-    const handleUpdateList = (id: number, status: Status) => {
+const handleUpdateList = async (id: number, newStatus: Status) => {
+    try {
+        const updatedItem = await updateTask(id, { ...listItems.find(item => item.id === id), statusN: newStatus });
+        const updatedList = listItems.map(item => {
+            if (item.id === id) {
+                return updatedItem;
+            }
+            return item;
+        });
+        setListItems(updatedList);
 
-        let card = listItems.find(item => item.id === id)
- 
-        if (card && card.status !== status) {
- 
-            card.status = status
- 
-            setListItems( prev => ([
-                 card!,
-                 ...prev.filter(item => item.id !== id)
-             ]))
-            
-            }}
+        // Actualizar filteredItems
+        if (searchTerm) {
+            const results = updatedList.filter((item) =>
+                item.titulo.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            setFilteredItems(results);
+        } else {
+            setFilteredItems(updatedList);
+        }
+    } catch (error) {
+        console.log("Error al actualizar la tarea", error);
+    }
+};
 
         
 
 return(
     <div>
-        <NavBar/>
+        <NavBar onSearch={setSearchTerm}/>
     <div className="container container-fluid full-height mt-3  ">
         
         <div className="row  full-height">
             {
-                typesTarea.map( container => (
+                typesTarea.map( container => {
+                    const filterTasks = filteredItems.filter(item => item.statusN === container);
+                    const sortedItems = filterTasks.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+                    return(
                     <ContainerCards
                         status={container}
                         key={container}
-                        items={listItems}
+                        items={sortedItems}
                         
                         isDragging={isDragging}
                         handleDragging={handleDragging}
                         handleUpdateList={handleUpdateList}
                     />  
-                ))
+                    )
+                })
             }
         </div>
     </div> 
+            <Notificaciones/>
     </div>     
 )
 

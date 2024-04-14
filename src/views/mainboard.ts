@@ -7,6 +7,7 @@ export interface Data {
     titulo: string
     content: string
     date: Date
-    status: Status
+    statusN: Status
 
 }
+
