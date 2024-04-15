@@ -2,8 +2,6 @@ import React, {useState}from "react";
 import { Data } from "../views/mainboard";
 import tareaService from "../services/tareaService";
 import {ModalConf} from './modalConfirmacion.tsx'
-import { ModalReact } from "./modal.tsx";
-import { PutTarea } from "./putTarea.tsx";
 
 interface Props {
   data: Data;
@@ -18,8 +16,6 @@ export const Card = ({ data, handleDragging }: Props) => {
   
   const [showModal, setShowModal] = useState(false)
   const [taskIdToDelete, setTaskIdToDelete] = useState<number | null>(null);
-  const [showModalPut , setShowModalPut] = useState(false)
-  const [idPut, setIdPut] = useState("")
 
   // const botonEliminar = (id) => {
   //   return deleteTask(id)
@@ -61,12 +57,6 @@ export const Card = ({ data, handleDragging }: Props) => {
     setShowModal(false);
   };
 
-  const updateTarea = (id) => {
-    setShowModalPut(true)
-    setIdPut(id)
-  }
-
-
   return (
 
     <div
@@ -87,7 +77,7 @@ export const Card = ({ data, handleDragging }: Props) => {
         <div className="d-flex justify-content-end">
           <button
             className="btn btn-outline-secondary btn-sm me-2"
-            onClick={() => updateTarea(data.id)}
+            // onClick={() => botonEliminar(data.id)}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -130,12 +120,6 @@ export const Card = ({ data, handleDragging }: Props) => {
             </div>
         </ModalConf>
       )}
-        {showModalPut && (
-      <ModalReact  setShowModal={setShowModalPut} titleModal handleSubmit>
-        <PutTarea setShowModal={setShowModalPut} idTarea={idPut}   />
-      </ModalReact>
-      
-    )}
     </div>
   );
 };

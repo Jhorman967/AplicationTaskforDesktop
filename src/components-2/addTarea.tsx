@@ -76,7 +76,7 @@ export const AddTarea = ({setShowModal, men }) => {
                                   </div>
                                   {/* <!-- Campo Fecha --> */}
                                   <div className="form-group mt-3">
-                                      <label htmlFor="date">Fecha y hora de recordatorio:</label>
+                                      <label htmlFor="date">Fecha:</label>
                                       <input type="datetime-local" 
                                       
                                       className="form-control" 

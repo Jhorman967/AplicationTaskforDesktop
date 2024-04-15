@@ -47,7 +47,7 @@ const handleSearchChange = (e) => {
     <div>
       <nav className="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
         <div className="container-fluid">
-          <a className="navbar-brand" style={{ fontWeight:'bold'} } >
+          <a className="navbar-brand" href="#">
             {username}
           </a>
           <button
@@ -74,7 +74,7 @@ const handleSearchChange = (e) => {
               <input
                 className="form-control me-sm-2"
                 type="search"
-                placeholder="Busca tareas por título..."
+                placeholder="Busca tus tareas por titulo"
                 value={searchTerm}
                 onChange={handleSearchChange}
               />

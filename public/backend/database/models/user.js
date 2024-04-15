@@ -23,7 +23,8 @@ db.on('open', () => {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT,
         email TEXT,
-        password TEXT
+        password TEXT, 
+        securityAnswer TEXT
     )`, (err) => {
         if (err) {
             console.error('Error al crear la tabla de usuarios:', err);
@@ -33,81 +34,31 @@ db.on('open', () => {
     });
 });
 
-
-//crear usuario
-
-    // app.post('/usuarios', (req, res) => {
-    //     const body = req.body;
-    //     const { name, email, password } = body; // Acceder a las propiedades del objeto body
-    
-    //     // Verificar que se hayan proporcionado name, email y password
-    //     if (!name || !email || !password) {
-    //         return res.status(400).json({ error: 'Faltan campos obligatorios (name, email, password)' });
-    //     }
-    
-    //     // Insertar el usuario en la base de datos
-    //     db.run('INSERT INTO users (name, email, password) VALUES (?, ?, ?)', [name, email, password], function(err) {
-    //         if (err) {
-    //             return res.status(500).json({ error: err.message });
-    //         }
-    //         res.json({  
-    //             id: this.lastID,
-    //             name: name,   // Utilizar las variables name, email, password
-    //             email: email,
-    //             password: password
-    //         });
-    //     });
-    // });
-    
-    
-
-    
-// app.post('/usuarios', (req, res) => {
-//     const body = req.body;
-//     const { name, email, password } = body; // Acceder a las propiedades del objeto body
-
-//     // Verificar que se hayan proporcionado name, email y password
-//     if (!name || !email || !password) {
-//         return res.status(400).json({ error: 'Faltan campos obligatorios (name, email, password)' });
+// const initialUser = {
+//     name: 'Usuario inicial',
+//     email: 'admin',
+//     password: '123456789',
+//     securityAnswer: 'titanic'
+// };
+// db.run('INSERT INTO users (name, email, password,securityAnswer) VALUES (?, ?, ?, ?)', [initialUser.name, initialUser.email, initialUser.password, initialUser.securityAnswer], function(err) {
+//     if (err) {
+//         console.error('Error al registrar el usuario inicial:', err);
+//     } else {
+//         console.log('Usuario inicial registrado correctamente');
 //     }
-
-//     // Insertar el usuario en la base de datos
-//     db.run('INSERT INTO users (name, email, password) VALUES (?, ?, ?)', [name, email, password], function(err) {
-//         if (err) {
-//             return res.status(500).json({ error: err.message });
-//         }
-//         res.json({  
-//             id: this.lastID,
-//             name: name,   // Utilizar las variables name, email, password
-//             email: email,
-//             password: password
-//         });
-//     });
 // });
-const initialUser = {
-    name: 'Usuario inicial',
-    email: 'admin',
-    password: '123456789'
-};
-db.run('INSERT INTO users (name, email, password) VALUES (?, ?, ?)', [initialUser.name, initialUser.email, initialUser.password], function(err) {
-    if (err) {
-        console.error('Error al registrar el usuario inicial:', err);
-    } else {
-        console.log('Usuario inicial registrado correctamente');
-    }
-});
 router.post('/usuarios', (req, res) => {
     const body = req.body;
-    const { name, email, password } = body; // Acceder a las propiedades del objeto body
+    const { name, email, password, securityAnswer } = body; // Acceder a las propiedades del objeto body
 
     // Verificar que se hayan proporcionado name, email y password
-    if (!name || !email || !password) {
+    if (!name || !email || !password || !securityAnswer) {
         console.log("Error en campos")
-        return res.status(400).json({ error: 'Faltan campos obligatorios (name, email, password)' });
+        return res.status(400).json({ error: 'Faltan campos obligatorios (name, email, password, securityAnswer)' });
     }
 
     // Insertar el usuario en la base de datos
-    db.run('INSERT INTO users (name, email, password) VALUES (?, ?, ?)', [name, email, password], function(err) {
+    db.run('INSERT INTO users (name, email, password, securityAnswer) VALUES (?, ?, ?, ?)', [name, email, password, securityAnswer], function(err) {
         if (err) {
             return res.status(500).json({ error: err.message });
         }
@@ -115,7 +66,8 @@ router.post('/usuarios', (req, res) => {
             id: this.lastID,
             name: name,   // Utilizar las variables name, email, password
             email: email,
-            password: password
+            password: password,
+            securityAnswer: securityAnswer
         }); 
     });
 });
@@ -134,8 +86,8 @@ router.get('/usuarios', (req, res) => {
 
 //Actualizar usuario por ID
 router.put('/usuarios/:id', (req, res) => {
-    const { name, email, password } = req.body;
-    db.run('UPDATE users SET name=?, email=?, password=? WHERE id=?', [name, email, password, req.params.id], function(err) {
+    const { name, email, password, securityAnswer } = req.body;
+    db.run('UPDATE users SET name=?, email=?, password=?, securityAnswer=? WHERE id=?', [name, email, password, securityAnswer, req.params.id], function(err) {
         if (err) {
             return res.status(500).json({ error: err.message });
         }

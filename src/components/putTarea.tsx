@@ -1,54 +1,79 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ModalReact } from "./modal.tsx";
 import { data } from "../assets/index.ts";
 import tareaService from "../services/tareaService.jsx";
 import { response } from "express";
+import { Data} from "../views/mainboard";
 
 
-export const AddTarea = ({setShowModal, men }) => {
+
+
+export const PutTarea = ({setShowModal,  idTarea}) => {
 
     
     const { getAllTask, createTask, updateTask, deleteTask } = tareaService();
-  
+    const [listItems, setListItems] = useState<Data[]>([])
+
     const [tarea, setTarea]=useState({
-            titulo:'',
+            titulo:"",
             date:'',
-            statusN:'Pendientes',
+            statusN:'',
             content:''
         })
 
-    const handleChange = (evt)=>{
+
+    //VAMOS A OBTENER TODAS LAS TAREAS Y FILTRAR LA TAREA QUE NOS INTERESA PARA GUARDAR SUS DATOS 
+    useEffect(() => {
+        const fetchTarea = async () => {
+          try {
+            const tasks = await getAllTask();
+            const tareaEncontrada = tasks.find((item) => item.id === idTarea);
+            if (tareaEncontrada) {
+              setTarea({
+                titulo: tareaEncontrada.titulo,
+                date: tareaEncontrada.date,
+                statusN: tareaEncontrada.statusN,
+                content: tareaEncontrada.content,
+              });
+            }
+          } catch (err) {
+            console.log("Error al cargar la tarea:", err);
+          }
+        };
+    
+        fetchTarea();
+      }, [idTarea]);
         
-        const {name, value } =evt.target;
-       setTarea({
-            ...tarea,
-            [name]:value
-        })   
-        }
+      const handleChange = (evt: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        const { name, value } = evt.target;
+        setTarea({
+          ...tarea,
+          [name]: value
+        });
+      };
+    
 
-    const handleSubmit = async (e: React.FormEvent) => {
-     
+        
+
+
+
+
+      const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(tarea)
-        console.log(men.mensaje)
-        // const [datos, setDatos]= useState(data)
-
         try {
-            const creartarea = await createTask(tarea);
-            console.log("tarea creada correctamente", creartarea)
-            setShowModal(false)
-        }catch (error){
-            console.log("error al crear la tarea", error)
+            const tareaActualizada = await updateTask(idTarea, tarea);
+            console.log("Tarea actualizada correctamente:", tareaActualizada);
+            setShowModal(false);
+        } catch (error) {
+            console.log("Error al actualizar la tarea:", error);
         }
-    }
-
-
+    };
 
    
 
     return(
 
-        <ModalReact setShowModal={setShowModal} titleModal={"Agregar Tarea"} handleSubmit={handleSubmit}>
+        <ModalReact setShowModal={setShowModal} titleModal={"Actualizar Tarea"} handleSubmit={handleSubmit}>
 
 
 
@@ -61,7 +86,7 @@ export const AddTarea = ({setShowModal, men }) => {
                                   <form onSubmit={handleSubmit}>
                                   {/* <!-- Campo Título --> */}
                                   <div className="form-group mt-3">
-                                      <label htmlFor="titulo">Título:</label>
+                                      <label htmlFor="titulo" style={{ color: "black" }}>Título:</label>
                                       <input 
                                       type="text" 
                                       className="form-control" 
@@ -121,7 +146,7 @@ export const AddTarea = ({setShowModal, men }) => {
                                   <hr />
                                   <div className="text-end">
                             <button type="submit" className="btn btn-primary">
-                                Agregar Tarea
+                                Actualizar Tarea
                             </button>
                         </div>
 

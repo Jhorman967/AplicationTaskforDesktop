@@ -22,7 +22,7 @@ export const ModalReact = ({children,setShowModal,titleModal,handleSubmit}) =>{
             <div className="modal-dialog" role="document">
                 <div className="modal-content">
                     <div className="modal-header">
-                        <h5 className="modal-title" style={{ color: "black" }}>{titleModal}</h5>
+                        <h5 className="modal-title">{titleModal}</h5>
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={toggleClose}>
                              <span aria-hidden="true">
                              </span>
