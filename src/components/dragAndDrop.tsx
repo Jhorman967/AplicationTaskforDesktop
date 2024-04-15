@@ -96,7 +96,7 @@ const handleUpdateList = async (id: number, newStatus: Status) => {
 return(
     <div>
         <NavBar onSearch={setSearchTerm}/>
-    <div className="container container-fluid full-height mt-3  ">
+    <div className="container container-fluid full-height mt-5  " style={{ paddingTop: '56px' }}>
         
         <div className="row  full-height">
             {

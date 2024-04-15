@@ -1,6 +1,6 @@
 {
   "name": "tareas",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "private": true,
   "main": "public/electron.js",
   "author": "Jhorman Gonzalez",
@@ -80,6 +80,17 @@
     ],
     "directories": {
       "buildResources": "assets"
+    },
+    "nsis": {
+      "oneClick": false, 
+      "allowToChangeInstallationDirectory": true,
+      "license": "./license.txt", 
+      "installerIcon": "./instalar.ico", 
+      "uninstallerIcon": "./instalar.ico", 
+      "shortcutName": "MyTareas" 
+    },
+    "win": {
+      "icon": "./tarea.ico"
     }
   }
 }

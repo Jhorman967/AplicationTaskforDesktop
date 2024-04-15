@@ -4,40 +4,18 @@ const path = require('path')
 // const { sequelize } = require('../src/models');
 // const userController = require('../public/');
 const status = process.env.NODE_ENV
-const isDev = process.env.NODE_ENV !== 'development';
-const templateMenu = [
-  {
-    label: 'Archivo',
-    submenu: [
-      {
-        label: 'Nueva Tarea',
-        accelerator: 'CmdOrCtrl+N',
-        click: function () {
-          createNewTarea();  
-        }
-      }
-    ]
-  },
-  {
-    label: 'Developer',
-    submenu: [
-      {
-        role: 'toggleDevTools'
-      },
-      {
-        role:'reload'
-      }
-    ]
-  }
-]
+const isDev = process.env.NODE_ENV === 'development';
 
-
+const iconPath = path.join(__dirname, 'tarea.ico');
 
 function createWindow () {
   const mainWindow = new BrowserWindow({
     width: 1280,
     height: 720,
     frame: true,
+    minHeight:720,
+    minWidth:1280,
+     icon: iconPath,
     // webPreferences: {
     //   preload: path.join(__dirname, 'preload.js')
     // },
@@ -64,7 +42,7 @@ function createWindow () {
   // })
   // userController.newUser()
   // const mainMenu = Menu.buildFromTemplate(templateMenu)
-  // Menu.setApplicationMenu(true)
+  mainWindow.setMenu(null);
   
     console.log(status)
   mainWindow.on('closed',()=> {

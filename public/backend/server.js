@@ -5,7 +5,7 @@ const userRouter = require('./database/models/user');
 const noteRouter = require('./database/models/note');
 const cors = require('cors');
 const app = express();
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 7777;
 
 
 

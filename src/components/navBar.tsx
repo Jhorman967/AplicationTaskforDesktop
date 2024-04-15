@@ -45,7 +45,7 @@ const handleSearchChange = (e) => {
   return(
   
     <div>
-      <nav className="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+      <nav className="navbar navbar-expand-lg bg-primary fixed-top mb-2" data-bs-theme="dark">
         <div className="container-fluid">
           <a className="navbar-brand" style={{ fontWeight:'bold'} } >
             {username}

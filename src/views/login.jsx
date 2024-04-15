@@ -79,7 +79,7 @@ export const Login = (props) => {
      
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="username">Usuarios</label>
+            <label htmlFor="username">Correo</label>
             <input
               type="text"
               className="form-control"

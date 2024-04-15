@@ -9,7 +9,7 @@ const tareaService = () =>{
     const { userid } = UseUser();
     // const UserId = localStorage.getItem('userId')
     
-    const baseURL = `http://localhost:8080/usuarios/${userid}/notas`
+    const baseURL = `http://localhost:7777/usuarios/${userid}/notas`
 
         
     const getAllTask = async () => {

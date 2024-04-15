@@ -4,7 +4,7 @@ import axios from "axios";
 
 
 
-const baseURL = "http://localhost:8080/usuarios"
+const baseURL = "http://localhost:7777/usuarios"
 
 
 const getAllUsuario = () =>{
