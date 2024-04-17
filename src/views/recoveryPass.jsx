@@ -79,7 +79,7 @@ const handleSubmit = async (event) => {
     
 
     // Redireccionar al usuario a la página de inicio
-    window.location.href = "/";
+    window.location.href = "#/";
   } catch (error) {
     console.log('Error al recuperar contraseña:', error);
   }

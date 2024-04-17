@@ -77,10 +77,10 @@ const handleSubmit = async (event) => {
     // Actualiza el contexto de usuario
     setUserId(nuevoUsuario.id);
     setUsername(nuevoUsuario.name);
-    localStorage.setItem("userId", nuevoUsuario.id);
+  
 
     // Navega a la página de tareas
-    window.location.href = "/";
+    window.location.href = "#/";
   } catch (error) {
     console.log('Error al registrar usuario:', error);
     setShowAlert(true);

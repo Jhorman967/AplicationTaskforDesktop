@@ -87,7 +87,8 @@
       "license": "./license.txt", 
       "installerIcon": "./instalar.ico", 
       "uninstallerIcon": "./instalar.ico", 
-      "shortcutName": "MyTareas" 
+      "shortcutName": "MyTareas",
+      "createDesktopShortcut": true 
     },
     "win": {
       "icon": "./tarea.ico"
